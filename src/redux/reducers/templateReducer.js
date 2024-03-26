@@ -4,8 +4,8 @@ const initialState = {
   data: []
 };
 
-export const recipesSlice = createSlice({
-  name: "recipes",
+export const templateSlice = createSlice({
+  name: "template",
   initialState,
   reducers: {
 
@@ -16,6 +16,6 @@ export const recipesSlice = createSlice({
   }
 });
 
-export const {} = recipesSlice.actions;
+export const {} = templateSlice.actions;
 
-export default recipesSlice.reducer;
+export default templateSlice.reducer;
