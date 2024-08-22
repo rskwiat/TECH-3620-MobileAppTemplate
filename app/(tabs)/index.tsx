@@ -1,11 +1,35 @@
+import { useState, useEffect } from 'react';
 import { Image, StyleSheet, Platform } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useAuth } from '@/hooks/useAuth';
+import { useRootNavigationState, useRouter, useSegments } from 'expo-router';
+import { pb } from '@/utils/pocketbase';
 
 export default function HomeScreen() {
+  // const { isInitialized, isLoggedIn } = useAuth();
+
+  // const router = useRouter();
+  // const segments = useSegments();
+  // const navigationState = useRootNavigationState();
+
+  // useEffect(() => {
+  //   if (!isInitialized || !navigationState?.key) return;
+  //   const inAuthGroup = segments[0] === '(auth)';
+
+  //   if (
+  //     !isLoggedIn &&
+  //     !inAuthGroup
+  //   ) {
+  //     router.replace('/(auth)/login');
+  //   } else if (isLoggedIn) {
+  //     router.replace('/(tabs)');
+  //   }
+  // }, [segments, navigationState?.key, isInitialized]);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
