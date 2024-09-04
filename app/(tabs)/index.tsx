@@ -1,34 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Image, StyleSheet, Platform } from 'react-native';
+import { Button } from 'react-native-paper';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useAuth } from '@/hooks/useAuth';
-import { useRootNavigationState, useRouter, useSegments } from 'expo-router';
-import { pb } from '@/utils/pocketbase';
+import { useAuth } from '@/context/auth';
 
 export default function HomeScreen() {
-  // const { isInitialized, isLoggedIn } = useAuth();
+  const { user, appSignOut } = useAuth();
 
-  // const router = useRouter();
-  // const segments = useSegments();
-  // const navigationState = useRootNavigationState();
-
-  // useEffect(() => {
-  //   if (!isInitialized || !navigationState?.key) return;
-  //   const inAuthGroup = segments[0] === '(auth)';
-
-  //   if (
-  //     !isLoggedIn &&
-  //     !inAuthGroup
-  //   ) {
-  //     router.replace('/(auth)/login');
-  //   } else if (isLoggedIn) {
-  //     router.replace('/(tabs)');
-  //   }
-  // }, [segments, navigationState?.key, isInitialized]);
+  const logOut = async () => appSignOut();
 
   return (
     <ParallaxScrollView
@@ -40,7 +23,7 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">{user?.username} </ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -70,6 +53,9 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+      <Button mode='contained' onPress={logOut}>
+        Logout
+      </Button>
     </ParallaxScrollView>
   );
 }
