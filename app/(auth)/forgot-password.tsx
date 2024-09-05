@@ -5,6 +5,7 @@ import { Button } from "react-native-paper";
 export default function ForgotPassword() {
 
   const onSubmit = async () => {
+
   }
 
   return (
