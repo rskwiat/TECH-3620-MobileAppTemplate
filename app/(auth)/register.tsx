@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ThemedText } from '@/components/ThemedText';
 import { Button, TextInput, Text } from "react-native-paper";
+import { useRouter } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '@/context/auth';
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -11,8 +11,9 @@ import { RegisterUserSchema, RegisterUserSchemaType } from '@/schemas/registerUs
 
 export default function RegisterUser() {
   const colorScheme = useColorScheme();
-  const { createAccount } = useAuth();
+  const router = useRouter();
 
+  const { createAccount } = useAuth();
   const {
     control,
     handleSubmit,
@@ -24,10 +25,22 @@ export default function RegisterUser() {
     'mode': 'onBlur'
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = async (data: any) => {
+    const passwordUpdate = {
+      ...data,
+      passwordConfirm: data.password
+    };
+
+    try {
+      await createAccount(passwordUpdate);
+      router.replace('/(tabs)');
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Text
         style={{
           color: colorScheme ? Colors[colorScheme].text : '',
@@ -35,6 +48,7 @@ export default function RegisterUser() {
       >
         Register for an Account
       </Text>
+
       <View style={styles.inputWrapper}>
         <Controller
           control={control}
@@ -42,6 +56,22 @@ export default function RegisterUser() {
           render={({ field: { onChange, value, onBlur } }) => (
             <TextInput
               label="Real Name"
+              value={value}
+              onBlur={onBlur}
+              onChangeText={value => onChange(value)}
+            />
+          )}
+        />
+        <ThemedText>{errors.name && errors?.name?.message as string}</ThemedText>
+      </View>
+
+      <View style={styles.inputWrapper}>
+        <Controller
+          control={control}
+          name='username'
+          render={({ field: { onChange, value, onBlur } }) => (
+            <TextInput
+              label="UserName"
               value={value}
               onBlur={onBlur}
               onChangeText={value => onChange(value)}
@@ -98,6 +128,9 @@ export default function RegisterUser() {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 20,
+  },
   inputWrapper: {
     marginBottom: 20,
   }

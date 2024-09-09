@@ -9,4 +9,5 @@ const store = new AsyncAuthStore({
 const BASE_URL = 'https://tech-3620-fall-2024.fly.dev';
 const pb = new Pocketbase(BASE_URL, store);
 
+
 export default pb;

@@ -78,7 +78,7 @@ export function AuthProvider({ children }) {
     };
 
     checkAuthStatus();
-  }, []);
+  }, [pb]);
 
   const appSignIn = async (email, password) => {
     if (!pb) return { error: 'PocketBase not initialized' };
@@ -114,7 +114,7 @@ export function AuthProvider({ children }) {
       const resp = await pb?.collection('users').create(data);
       setUser(pb?.authStore.isValid ? pb.authStore.model : null);
       setIsLoggedIn(pb?.authStore.isValid ?? false);
-      return { user: resp?.record };
+      return { user: resp, pb };
     } catch (e) {
       return { error: e };
     }

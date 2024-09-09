@@ -6,6 +6,11 @@ export const RegisterUserSchema = z.object({
   }).min(3, {
     message: 'Name must be greater than 3 characters'
   }),
+  username: z.string({
+    required_error: "Username is required",
+  }).min(3, {
+    message: 'Username must be greater than 3 characters'
+  }),
   email: z.string({
     required_error: "Email is required",
   }
