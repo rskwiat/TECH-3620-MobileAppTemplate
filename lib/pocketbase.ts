@@ -6,7 +6,7 @@ const store = new AsyncAuthStore({
   initial: AsyncStorage.getItem('pb_auth'),
 });
 
-const BASE_URL = 'https://tech-3620-fall-2024.fly.dev';
+const BASE_URL = '';
 const pb = new Pocketbase(BASE_URL, store);
 
 
